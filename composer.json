@@ -17,6 +17,12 @@
       "email": "slye@nubox.fr",
       "homepage": "https://github.com/SBordier44",
       "role": "Developer"
+    },
+    {
+        "name": "Lucas D.",
+        "email": "ldesnoue@igmcentre.com",
+        "homepage": "https://github.com/LucasDesnoue",
+        "role": "Developer"
     }
   ],
   "support": {
@@ -25,7 +31,7 @@
   },
   "homepage": "https://github.com/NuBOXDevCom/PHPEsker",
   "require": {
-    "php": ">= 7.2"
+    "php": ">= 8"
   },
   "autoload": {
     "psr-4": {

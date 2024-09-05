@@ -36,9 +36,9 @@ class QueryService
      */
     public $QueryHeaderValue;
     /**
-     * @var EskerException
+     * @var ?EskerException
      */
-    public $eskerException;
+    public $eskerException = null;
     /**
      * @var string
      */
@@ -53,15 +53,14 @@ class QueryService
      * @param string $wsdl
      * @param bool $debugMode
      */
-    public function __construct(string $wsdl, bool $debugMode = false)
+    public function __construct(string $wsdl, bool $traceMode = true, bool $exceptionsMode = false)
     {
         $this->client = new SoapClient($wsdl, [
-                'trace' => $debugMode,
-                'exceptions' => $debugMode,
+                'trace' => $traceMode,
+                'exceptions' => $exceptionsMode,
                 'encoding' => 'utf-8'
             ]
         );
-        $this->eskerException = new EskerException();
     }
 
     /**
@@ -74,9 +73,9 @@ class QueryService
 
     /**
      * @param Request $request
-     * @return Result
+     * @return ?Result
      */
-    public function QueryFirst(Request $request): Result
+    public function QueryFirst(Request $request): ?Result
     {
         $this->_CheckEndPoint();
         $this->setQueryHeader();
@@ -86,6 +85,7 @@ class QueryService
             $queryResult = $this->getQueryResult($this->result->{'return'});
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
             return null;
         }
@@ -111,9 +111,9 @@ class QueryService
 
     /**
      * @param Request $request
-     * @return Result
+     * @return ?Result
      */
-    public function QueryNext(Request $request): Result
+    public function QueryNext(Request $request): ?Result
     {
         $this->_CheckEndPoint();
         $this->setQueryHeader();
@@ -123,6 +123,7 @@ class QueryService
             $queryResult = $this->getQueryResult($this->result->{'return'});
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
             return null;
         }
@@ -131,9 +132,9 @@ class QueryService
 
     /**
      * @param Request $request
-     * @return Result
+     * @return ?Result
      */
-    public function QueryLast(Request $request): Result
+    public function QueryLast(Request $request): ?Result
     {
         $this->_CheckEndPoint();
         $this->setQueryHeader();
@@ -143,6 +144,7 @@ class QueryService
             $queryResult = $this->getQueryResult($this->result->{'return'});
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
             return null;
         }
@@ -181,6 +183,7 @@ class QueryService
             $queryResult = $this->getQueryResult($this->result->{'return'});
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $queryResult;
@@ -203,6 +206,7 @@ class QueryService
             $attachments = $this->getAttachments($this->result->{'return'});
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $attachments;
@@ -228,6 +232,7 @@ class QueryService
             $statisticsResult->includeSubNodes = $wrapper->includeSubNodes;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $statisticsResult;
@@ -253,6 +258,7 @@ class QueryService
             $actionResult->errorReason = $wrapper->errorReason;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $actionResult;
@@ -278,6 +284,7 @@ class QueryService
             $actionResult->errorReason = $wrapper->errorReason;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $actionResult;
@@ -304,6 +311,7 @@ class QueryService
             $actionResult->errorReason = $wrapper->errorReason;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $actionResult;
@@ -330,6 +338,7 @@ class QueryService
             $actionResult->errorReason = $wrapper->errorReason;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $actionResult;
@@ -351,6 +360,7 @@ class QueryService
             $actionResult->errorReason = $wrapper->errorReason;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $actionResult;
@@ -372,6 +382,7 @@ class QueryService
             $actionResult->errorReason = $wrapper->errorReason;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $actionResult;
@@ -392,6 +403,7 @@ class QueryService
             $resultFile = $this->result->{'return'};
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $resultFile;
@@ -414,6 +426,7 @@ class QueryService
             $resultFile = $this->result->{'return'};
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $resultFile;

@@ -23,9 +23,9 @@ class SubmissionService
      */
     public $result;
     /**
-     * @var EskerException
+     * @var ?EskerException
      */
-    public $eskerException;
+    public $eskerException = null;
     /**
      * @var string
      */
@@ -40,15 +40,14 @@ class SubmissionService
      * @param string $wsdl
      * @param bool $debugMode
      */
-    public function __construct(string $wsdl, bool $debugMode = false)
+    public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
         $this->client = new SoapClient($wsdl, [
                 'exceptions' => $debugMode,
-                'trace' => $debugMode,
+                'trace' => $traceMode,
                 'encoding' => 'utf-8',
             ]
         );
-        $this->eskerException = new EskerException();
     }
 
     /**
@@ -78,6 +77,7 @@ class SubmissionService
             $submissionResult->transportID = $wrapper->transportID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $submissionResult;
@@ -100,6 +100,7 @@ class SubmissionService
             $submissionResult->transportID = $wrapper->transportID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $submissionResult;
@@ -122,6 +123,7 @@ class SubmissionService
             $submissionResult->transportID = $wrapper->transportID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $submissionResult;
@@ -150,6 +152,7 @@ class SubmissionService
             $extractionResult->transports = $wrapper->transports;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $extractionResult;
@@ -178,6 +181,7 @@ class SubmissionService
             $extractionResult->transports = $wrapper->transports;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $extractionResult;
@@ -207,6 +211,7 @@ class SubmissionService
             $conversionResult->convertedFile->storageID = $wrapper->convertedFile->storageID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $conversionResult;
@@ -227,6 +232,7 @@ class SubmissionService
             $resultFile = base64_decode($this->result->{'return'});
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $resultFile;
@@ -252,6 +258,7 @@ class SubmissionService
             $this->result = $this->client->__soapCall('RegisterResource', array('parameters' => $param));
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
     }
@@ -278,6 +285,7 @@ class SubmissionService
             }
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $resources;
@@ -297,6 +305,7 @@ class SubmissionService
             $this->result = $this->client->__soapCall('DeleteResource', ['parameters' => $param]);
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
     }
@@ -322,6 +331,7 @@ class SubmissionService
             $wsfile->storageID = $wrapper->storageID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $wsfile;
@@ -348,6 +358,7 @@ class SubmissionService
             $wsfile->storageID = $wrapper->storageID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
         return $wsfile;

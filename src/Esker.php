@@ -28,7 +28,13 @@ class Esker
     /**
      * @var bool
      */
-    private $debugMode;
+    private $traceMode;
+
+    /**
+     * @var bool
+     */
+    private $exceptionsMode;
+
     /**
      * @var QueryService
      */
@@ -50,9 +56,10 @@ class Esker
      * @throws BindingException
      * @throws LoginException
      */
-    public function __construct(string $username, string $password, bool $debugMode = false)
+    public function __construct(string $username, string $password, bool $traceMode = true, bool $exceptionsMode = false)
     {
-        $this->debugMode = $debugMode;
+        $this->traceMode = $traceMode;
+        $this->exceptionsMode = $exceptionsMode;
         $session = new SessionService('https://as1.ondemand.esker.com/EDPWS_D/EDPWS.dll?Handler=GenSession2WSDL');
         $bindings = $session->GetBindings($username);
         if ($session->eskerException) {
@@ -63,11 +70,11 @@ class Esker
         if ($session->eskerException) {
             throw new LoginException('Failed call Login : ' . $session->eskerException->Message);
         }
-        $this->submissionService = new SubmissionService($bindings->submissionServiceWSDL, $debugMode);
+        $this->submissionService = new SubmissionService($bindings->submissionServiceWSDL, $traceMode, $exceptionsMode);
         $this->submissionService->Url = $bindings->submissionServiceLocation;
         $this->submissionService->SessionHeaderValue = new SessionHeader();
         $this->submissionService->SessionHeaderValue->sessionID = $login->sessionID;
-        $this->queryService = new QueryService($bindings->queryServiceWSDL, $debugMode);
+        $this->queryService = new QueryService($bindings->queryServiceWSDL, $traceMode, $exceptionsMode);
         $this->queryService->Url = $bindings->queryServiceLocation;
         $this->queryService->SessionHeaderValue = new Query\SessionHeader();
         $this->queryService->SessionHeaderValue->sessionID = $login->sessionID;
@@ -218,9 +225,9 @@ class Esker
 
     /**
      * @param string $ruidex
-     * @return Query\Result
+     * @return ?Query\Result
      */
-    public function getLetterStatuses(string $ruidex): Query\Result
+    public function getLetterStatuses(string $ruidex): ?Query\Result
     {
         $this->queryService->QueryHeaderValue = new Header();
         $this->queryService->QueryHeaderValue->recipientType = 'MOD';

@@ -24,9 +24,9 @@ class SessionService
      */
     public $result;
     /**
-     * @var EskerException
+     * @var ?EskerException
      */
-    public $eskerException;
+    public $eskerException = null;
     /**
      * @var string
      */
@@ -40,14 +40,13 @@ class SessionService
      * SessionService constructor.
      * @param string $wsdl
      */
-    public function __construct(string $wsdl)
+    public function __construct(string $wsdl, $exceptionsMode = false)
     {
         $this->client = new SoapClient($wsdl, [
                 'exceptions' => true,
                 'encoding' => 'utf-8'
             ]
         );
-        $this->eskerException = new EskerException();
     }
 
     /**
@@ -82,6 +81,7 @@ class SessionService
             $bindingResult->queryServiceWSDL = $wrapper->queryServiceWSDL;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = 'Unable to call Esker Bindings Service';
             trigger_error($this->eskerException->Message, E_USER_ERROR);
             exit(1);
@@ -108,6 +108,7 @@ class SessionService
             $this->SessionHeaderValue->sessionID = $loginResult->sessionID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = 'Unable to call Esker Login Service';
             trigger_error($this->eskerException->Message, E_USER_ERROR);
             exit(1);
@@ -127,6 +128,7 @@ class SessionService
             $this->result = $this->client->__soapCall('Logout', ['parameters' => $param]);
             $this->eskerException = null;
         } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
             $this->eskerException->Message = 'Unable to call Esker Logout Service';
             trigger_error($this->eskerException->Message, E_USER_ERROR);
             exit(1);
