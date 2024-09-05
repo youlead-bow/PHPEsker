@@ -1,5 +1,5 @@
 # PHPEsker
-Library for PHP 7.2+ to interacts with [Esker](https://www.esker.com) Services.
+Library for PHP 8+ to interacts with [Esker](https://www.esker.com) Services.
 
 ## Installation
 ```bash
