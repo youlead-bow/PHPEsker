@@ -8,8 +8,5 @@ namespace Esker\Submission;
  */
 class TransportVars
 {
-    /**
-     * @var [SVar]
-     */
-    public $vars;
+    public array $Var;
 }
