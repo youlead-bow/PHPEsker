@@ -38,7 +38,7 @@ class Esker
      * @throws LoginException
      */
     public function __construct(string $username, string $password, bool $traceMode = true, bool $exceptionsMode = false)
-    {;
+    {
         $session = new SessionService('https://as1.ondemand.esker.com/EDPWS_D/EDPWS.dll?Handler=GenSession2WSDL');
         $bindings = $session->GetBindings($username);
         if ($session->eskerException) {
@@ -128,8 +128,7 @@ class Esker
         }
         if ($validation) {
             $this->transport->vars->Var[] = $this->_buildVariableTag('NeedValidation', '1');
-            $this->transport->vars->Var[] = $this->_buildVariableTag('ValidationMessage',
-                utf8_encode($validationMessage));
+            $this->transport->vars->Var[] = $this->_buildVariableTag('ValidationMessage', mb_convert_encoding($validationMessage, 'UTF-8', 'ISO-8859-1'));
         }
         return $this;
     }
@@ -138,7 +137,7 @@ class Esker
      * @param string $file
      * @return File
      */
-    private function _readFile(string $file): File
+    private function _readFile(string $file): string
     {
         $wsFile = new File();
         $wsFile->mode = Constant::WSFILE_MODE['MODE_INLINED'];
@@ -179,7 +178,7 @@ class Esker
      * @param string $searchString
      * @return bool|int
      */
-    private function _lastIndexOf(string $sourceString, string $searchString)
+    private function _lastIndexOf(string $sourceString, string $searchString): bool|int
     {
         $index = strpos(strrev($sourceString), strrev($searchString));
         $index = strlen($sourceString) - strlen($index) - $index;
@@ -190,7 +189,7 @@ class Esker
      * @param string $filename
      * @return bool|string
      */
-    private function _getFileName(string $filename)
+    private function _getFileName(string $filename): bool|string
     {
         $i = $this->_lastIndexOf($filename, '/');
         if ($i < 0) {
@@ -212,7 +211,7 @@ class Esker
         $this->queryService->QueryHeaderValue->recipientType = 'MOD';
         $request = new Request();
         $request->nItems = 1;
-        $request->attributes = '';
+        $request->attributes = [];
         $request->filter = '(&(RuidEx=' . $ruidex . '))';
         return $this->queryService->QueryFirst($request);
     }

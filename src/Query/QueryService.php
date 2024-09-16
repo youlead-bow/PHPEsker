@@ -415,7 +415,7 @@ class QueryService
      * @param mixed $wrapper
      * @return Result
      */
-    public function getQueryResult($wrapper): Result
+    public function getQueryResult(mixed $wrapper): Result
     {
         $queryResult = new Result();
         $queryResult->noMoreItems = $wrapper->noMoreItems;
@@ -445,7 +445,7 @@ class QueryService
      * @param mixed $wrapper
      * @return Attachments
      */
-    public function getAttachments($wrapper): Attachments
+    public function getAttachments(mixed $wrapper): Attachments
     {
         $attachments = new Attachments();
         $attachments->nAttachments = $wrapper->nAttachments;
@@ -514,9 +514,9 @@ class QueryService
 
     /**
      * @param string $headerName
-     * @param string|array $headerValue
+     * @param array|string $headerValue
      */
-    public function setHeader(string $headerName, $headerValue): void
+    public function setHeader(string $headerName, array|string $headerValue): void
     {
         if (!isset($this->requestHeaders)) {
             $this->requestHeaders = [$headerName => $headerValue];

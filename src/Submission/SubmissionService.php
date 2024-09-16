@@ -190,6 +190,7 @@ class SubmissionService
         try {
             $this->result = $this->client->__soapCall('ConvertFile', array('parameters' => $param));
             $wrapper = $this->result->{'return'};
+            $conversionResult->convertedFile = new File();
             $conversionResult->convertedFile->name = $wrapper->convertedFile->name;
             $conversionResult->convertedFile->mode = $wrapper->convertedFile->mode;
             $content = $wrapper->convertedFile->content;
@@ -366,10 +367,10 @@ class SubmissionService
 
     /**
      * @param string $headerName
-     * @param string|array $headerValue
+     * @param array|string $headerValue
      * @return SubmissionService
      */
-    public function setHeader(string $headerName, $headerValue): SubmissionService
+    public function setHeader(string $headerName, array|string $headerValue): SubmissionService
     {
         if (!isset($this->requestHeaders)) {
             $this->requestHeaders = [$headerName => $headerValue];
