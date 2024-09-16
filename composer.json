@@ -1,6 +1,6 @@
 {
-  "name": "nuboxdevcom/phpesker",
-  "description": "Library for PHP 7.2+ to interact with Esker Services",
+  "name": "youlead-bow/phpesker",
+  "description": "Library for PHP 8+ to interact with Esker Services",
   "type": "library",
   "license": "MIT",
   "keywords": [
@@ -23,15 +23,21 @@
         "email": "ldesnoue@igmcentre.com",
         "homepage": "https://github.com/LucasDesnoue",
         "role": "Developer"
+    },
+    {
+        "name": "Flavien B.",
+        "email": "f.bucheton@youlead.fr",
+        "homepage": "https://github.com/youlead-bow/PHPEsker",
+        "role": "Developer"
     }
   ],
   "support": {
-    "issues": "https://github.com/NuBOXDevCom/PHPEsker/issues",
-    "source": "https://github.com/NuBOXDevCom/PHPEsker/tree/master"
+    "issues": "https://github.com/youlead-bow/PHPEsker/issues",
+    "source": "https://github.com/youlead-bow/PHPEsker/tree/master"
   },
-  "homepage": "https://github.com/NuBOXDevCom/PHPEsker",
+  "homepage": "https://github.com/youlead-bow/PHPEsker",
   "require": {
-    "php": ">= 8"
+    "php": ">= 8.3"
   },
   "autoload": {
     "psr-4": {
