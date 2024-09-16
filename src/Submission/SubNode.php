@@ -8,28 +8,10 @@ namespace Esker\Submission;
  */
 class SubNode
 {
-    /**
-     * @var string
-     */
-    public $name;
-    /**
-     * @var string
-     */
-    public $relativeName;
-    /**
-     * @var int
-     */
-    public $nSubnodes;
-    /**
-     * @var [SubNode]
-     */
-    public $subNodes;
-    /**
-     * @var int
-     */
-    public $nVars;
-    /**
-     * @var [SVar]
-     */
-    public $vars;
+    public string $name;
+    public string $relativeName;
+    public int $nSubnodes;
+    public array $subNodes;
+    public int $nVars;
+    public array $vars;
 }
