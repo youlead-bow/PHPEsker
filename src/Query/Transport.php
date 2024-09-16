@@ -8,36 +8,12 @@ namespace Esker\Query;
  */
 class Transport
 {
-    /**
-     * @var string
-     */
-    public $transportID;
-    /**
-     * @var string
-     */
-    public $transportName;
-    /**
-     * @var string
-     */
-    public $recipientType;
-    /**
-     * @var string
-     */
-    public $state;
-    /**
-     * @var int
-     */
-    public $nVars;
-    /**
-     * @var [QVar]
-     */
-    public $vars;
-    /**
-     * @var int
-     */
-    public $nSubnodes;
-    /**
-     * @var [SubNode]
-     */
-    public $subnodes;
+    public string $transportID;
+    public string $transportName;
+    public string $recipientType;
+    public string $state;
+    public int $nVars;
+    public array $vars;
+    public int $nSubnodes;
+    public array $subnodes;
 }

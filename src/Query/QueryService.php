@@ -15,43 +15,21 @@ use SoapVar;
  */
 class QueryService
 {
-    /**
-     * @var SoapClient
-     */
-    public $client;
-    /**
-     * @var mixed
-     */
-    public $result;
-    /**
-     * @var string
-     */
-    public $Url;
-    /**
-     * @var SessionHeader
-     */
-    public $SessionHeaderValue;
-    /**
-     * @var Header
-     */
-    public $QueryHeaderValue;
-    /**
-     * @var ?EskerException
-     */
-    public $eskerException = null;
-    /**
-     * @var string
-     */
-    public $RESOURCE_TYPE;
-    /**
-     * @var array
-     */
-    private $soapHeaders;
+    public SoapClient $client;
+    public mixed $result;
+    public string $Url;
+    public SessionHeader $SessionHeaderValue;
+    public Header $QueryHeaderValue;
+    public ?EskerException $eskerException = null;
+    public string $RESOURCE_TYPE;
+    private array $soapHeaders;
 
     /**
      * QueryService constructor.
      * @param string $wsdl
-     * @param bool $debugMode
+     * @param bool $traceMode
+     * @param bool $exceptionsMode
+     * @throws SoapFault
      */
     public function __construct(string $wsdl, bool $traceMode = true, bool $exceptionsMode = false)
     {
