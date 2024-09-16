@@ -18,5 +18,5 @@ class Transport
     public int $nSubnodes = 0;
     public array $subnodes;
     public int $nAttachments = 0;
-    public Attachments $attachments;
+    public TransportAttachments $attachments;
 }
