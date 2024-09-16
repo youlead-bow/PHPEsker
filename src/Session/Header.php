@@ -8,8 +8,5 @@ namespace Esker\Session;
  */
 class Header
 {
-    /**
-     * @var string
-     */
-    public $sessionID;
+    public string $sessionID;
 }

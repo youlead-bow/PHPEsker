@@ -8,8 +8,5 @@ namespace Esker\Session;
  */
 class LoginResult
 {
-    /**
-     * @var string
-     */
-    public $sessionID;
+    public string $sessionID;
 }

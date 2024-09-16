@@ -2,6 +2,7 @@
 
 namespace Esker\Session;
 
+use AllowDynamicProperties;
 use Esker\Exception\EskerException;
 use Esker\Query\SessionHeader;
 use SoapClient;
@@ -13,34 +14,21 @@ use SoapVar;
  * Class SessionService
  * @package Esker\Session
  */
-class SessionService
+#[AllowDynamicProperties] class SessionService
 {
-    /**
-     * @var SoapClient
-     */
-    public $client;
-    /**
-     * @var mixed
-     */
-    public $result;
-    /**
-     * @var ?EskerException
-     */
-    public $eskerException = null;
-    /**
-     * @var string
-     */
-    public $Url;
-    /**
-     * @var SessionHeader
-     */
-    public $SessionHeaderValue;
+    public SoapClient $client;
+    public mixed $result;
+    public ?EskerException $eskerException = null;
+    public string $Url;
+    public SessionHeader $SessionHeaderValue;
 
     /**
      * SessionService constructor.
      * @param string $wsdl
+     * @param bool $exceptionsMode
+     * @throws SoapFault
      */
-    public function __construct(string $wsdl, $exceptionsMode = false)
+    public function __construct(string $wsdl, bool $exceptionsMode = false)
     {
         $this->client = new SoapClient($wsdl, [
                 'exceptions' => true,
@@ -84,7 +72,6 @@ class SessionService
             $this->eskerException = new EskerException();
             $this->eskerException->Message = 'Unable to call Esker Bindings Service';
             trigger_error($this->eskerException->Message, E_USER_ERROR);
-            exit(1);
         }
         return $bindingResult;
     }
@@ -111,7 +98,6 @@ class SessionService
             $this->eskerException = new EskerException();
             $this->eskerException->Message = 'Unable to call Esker Login Service';
             trigger_error($this->eskerException->Message, E_USER_ERROR);
-            exit(1);
         }
         return $loginResult;
     }
@@ -131,7 +117,6 @@ class SessionService
             $this->eskerException = new EskerException();
             $this->eskerException->Message = 'Unable to call Esker Logout Service';
             trigger_error($this->eskerException->Message, E_USER_ERROR);
-            exit(1);
         }
     }
 
