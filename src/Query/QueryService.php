@@ -23,6 +23,7 @@ class QueryService
     public ?EskerException $eskerException = null;
     public string $RESOURCE_TYPE;
     private array $soapHeaders;
+    private array $requestHeaders;
 
     /**
      * QueryService constructor.
