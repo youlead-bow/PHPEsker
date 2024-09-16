@@ -8,28 +8,10 @@ namespace Esker\Session;
  */
 class BindingResult
 {
-    /**
-     * @var string
-     */
-    public $sessionServiceLocation;
-    /**
-     * @var string
-     */
-    public $submissionServiceLocation;
-    /**
-     * @var string
-     */
-    public $queryServiceLocation;
-    /**
-     * @var string
-     */
-    public $sessionServiceWSDL;
-    /**
-     * @var string
-     */
-    public $submissionServiceWSDL;
-    /**
-     * @var string
-     */
-    public $queryServiceWSDL;
+    public string $sessionServiceLocation;
+    public string $submissionServiceLocation;
+    public string $queryServiceLocation;
+    public string $sessionServiceWSDL;
+    public string $submissionServiceWSDL;
+    public string $queryServiceWSDL;
 }
