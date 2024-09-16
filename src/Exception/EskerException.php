@@ -13,5 +13,5 @@ class EskerException extends Exception
     /**
      * @var string
      */
-    public $Message;
+    public string $Message;
 }

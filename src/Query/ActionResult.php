@@ -8,24 +8,9 @@ namespace Esker\Query;
  */
 class ActionResult
 {
-    /**
-     * @var int
-     */
-    public $nSucceeded;
-    /**
-     * @var int
-     */
-    public $nFailed;
-    /**
-     * @var int
-     */
-    public $nItem;
-    /**
-     * @var array
-     */
-    public $transportIDs;
-    /**
-     * @var string
-     */
-    public $errorReason;
+    public int $nSucceeded;
+    public int $nFailed;
+    public int $nItem;
+    public array $transportIDs;
+    public string $errorReason;
 }

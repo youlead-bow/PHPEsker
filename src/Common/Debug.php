@@ -15,13 +15,13 @@ class Debug extends SoapClient
      * @param string $location
      * @param string $action
      * @param int $version
-     * @param int $one_way
+     * @param int $oneWay
      * @return string
      */
-    public function __doRequest($request, $location, $action, $version, $one_way = 0): string
+    public function __doRequest(string $request, string $location, string $action, int $version, int|bool $oneWay = 0): string
     {
         self::dump($request);
-        return parent::__doRequest($request, $location, $action, $version, $one_way);
+        return parent::__doRequest($request, $location, $action, $version, $oneWay);
     }
 
     /**

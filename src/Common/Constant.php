@@ -8,26 +8,26 @@ namespace Esker\Common;
  */
 class Constant
 {
-    public const WSFILE_MODE = [
+    public const array WSFILE_MODE = [
         'MODE_UNDEFINED' => 'MODE_UNDEFINED',
         'MODE_ON_SERVER' => 'MODE_ON_SERVER',
         'MODE_INLINED' => 'MODE_INLINED'
     ];
 
-    public const RESOURCE_TYPE = [
+    public const array RESOURCE_TYPE = [
         'TYPE_STYLESHEET' => 'TYPE_STYLESHEET',
         'TYPE_IMAGE' => 'TYPE_IMAGE',
         'TYPE_COVER' => 'TYPE_COVER'
     ];
 
-    public const ATTACHMENTS_FILTER = [
+    public const array ATTACHMENTS_FILTER = [
         'FILTER_NONE' => 'FILTER_NONE',
         'FILTER_ALL' => 'FILTER_ALL',
         'FILTER_CONVERTED' => 'FILTER_CONVERTED',
         'FILTER_SOURCE' => 'FILTER_SOURCE'
     ];
 
-    public const STATES = [
+    public const array STATES = [
         'FR' => [
             0 => 'En cours de traitement - Mis en file d\'attente',
             10 => 'En cours de traitement - Soumis',
@@ -60,7 +60,7 @@ class Constant
         ]
     ];
 
-    public const VALIDATION_STATES = [
+    public const array VALIDATION_STATES = [
         'FR' => [
             0 => 'Non traité',
             1 => 'Approuvé',
@@ -81,7 +81,7 @@ class Constant
         ]
     ];
 
-    public const MAIL_TYPE = [
+    public const array MAIL_TYPE = [
         'FR' => [
             'Prioritaire' => 'U', // default
             'Economique' => 'E',
