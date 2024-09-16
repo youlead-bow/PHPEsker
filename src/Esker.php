@@ -25,27 +25,8 @@ use Esker\Submission\TransportVars;
  */
 class Esker
 {
-    /**
-     * @var bool
-     */
-    private $traceMode;
-
-    /**
-     * @var bool
-     */
-    private $exceptionsMode;
-
-    /**
-     * @var QueryService
-     */
     private QueryService $queryService;
-    /**
-     * @var SubmissionService
-     */
     private SubmissionService $submissionService;
-    /**
-     * @var Transport
-     */
     private Transport $transport;
 
     /**
@@ -57,9 +38,7 @@ class Esker
      * @throws LoginException
      */
     public function __construct(string $username, string $password, bool $traceMode = true, bool $exceptionsMode = false)
-    {
-        $this->traceMode = $traceMode;
-        $this->exceptionsMode = $exceptionsMode;
+    {;
         $session = new SessionService('https://as1.ondemand.esker.com/EDPWS_D/EDPWS.dll?Handler=GenSession2WSDL');
         $bindings = $session->GetBindings($username);
         if ($session->eskerException) {
