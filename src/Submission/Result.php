@@ -8,12 +8,6 @@ namespace Esker\Submission;
  */
 class Result
 {
-    /**
-     * @var string
-     */
-    public $submissionID;
-    /**
-     * @var string
-     */
-    public $transportID;
+    public string $submissionID;
+    public string $transportID;
 }

@@ -8,12 +8,6 @@ namespace Esker\Submission;
  */
 class Resources
 {
-    /**
-     * @var int
-     */
-    public $nResources;
-    /**
-     * @var array
-     */
-    public $resources;
+    public int $nResources;
+    public array $resources;
 }

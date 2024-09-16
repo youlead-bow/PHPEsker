@@ -8,16 +8,7 @@ namespace Esker\Submission;
  */
 class ExtractionResult
 {
-    /**
-     * @var int
-     */
-    public $noMoreItems;
-    /**
-     * @var int
-     */
-    public $nTransports;
-    /**
-     * @var [Transport]
-     */
-    public $transports;
+    public int $noMoreItems;
+    public int $nTransports;
+    public array $transports;
 }

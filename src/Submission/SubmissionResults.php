@@ -8,16 +8,7 @@ namespace Esker\Submission;
  */
 class SubmissionResults
 {
-    /**
-     * @var string
-     */
-    public $submissionID;
-    /**
-     * @var int
-     */
-    public $nTransport;
-    /**
-     * @var array
-     */
-    public $transportIDs;
+    public string $submissionID;
+    public int $nTransport;
+    public array $transportIDs;
 }

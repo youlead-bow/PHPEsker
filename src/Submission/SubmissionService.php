@@ -2,6 +2,7 @@
 
 namespace Esker\Submission;
 
+use AllowDynamicProperties;
 use Esker\Exception\EskerException;
 use SoapClient;
 use SoapFault;
@@ -12,7 +13,7 @@ use SoapVar;
  * Class SubmissionService
  * @package Esker\Submission
  */
-class SubmissionService
+#[AllowDynamicProperties] class SubmissionService
 {
     public SoapClient $client;
     public mixed $result;

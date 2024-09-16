@@ -8,8 +8,5 @@ namespace Esker\Submission;
  */
 class ConversionResult
 {
-    /**
-     * @var File
-     */
-    public $convertedFile;
+    public File $convertedFile;
 }

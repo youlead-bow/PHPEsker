@@ -8,24 +8,9 @@ namespace Esker\Submission;
  */
 class BusinessData
 {
-    /**
-     * @var string
-     */
-    public $file;
-    /**
-     * @var int
-     */
-    public $nExternalVars;
-    /**
-     * @var [SVar]
-     */
-    public $externalVars;
-    /**
-     * @var int
-     */
-    public $nAttachments;
-    /**
-     * @var [Attachment]
-     */
-    public $attachments;
+    public string $file;
+    public int $nExternalVars;
+    public array $externalVars;
+    public int $nAttachments;
+    public array $attachments;
 }

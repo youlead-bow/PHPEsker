@@ -8,12 +8,6 @@ namespace Esker\Submission;
  */
 class BusinessRules
 {
-    /**
-     * @var string
-     */
-    public $configurationName;
-    /**
-     * @var string
-     */
-    public $ruleName;
+    public string $configurationName;
+    public string $ruleName;
 }

@@ -8,24 +8,9 @@ namespace Esker\Submission;
  */
 class File
 {
-    /**
-     * @var string
-     */
-    public $name;
-    /**
-     * @var string
-     */
-    public $mode;
-    /**
-     * @var string
-     */
-    public $content;
-    /**
-     * @var string
-     */
-    public $url;
-    /**
-     * @var string
-     */
-    public $storageID;
+    public string $name;
+    public string $mode;
+    public string $content;
+    public string $url;
+    public string $storageID;
 }
