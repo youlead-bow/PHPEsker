@@ -8,40 +8,13 @@ namespace Esker\Submission;
  */
 class Transport
 {
-    /**
-     * @var string
-     */
-    public $transportName;
-    /**
-     * @var string
-     */
-    public $recipientType;
-    /**
-     * @var int
-     */
-    public $transportIndex;
-    /**
-     * @var int
-     */
-    public $nVars = 0;
-    /**
-     * @var [SVar]
-     */
-    public $vars;
-    /**
-     * @var int
-     */
-    public $nSubnodes = 0;
-    /**
-     * @var [SubNode]
-     */
-    public $subnodes;
-    /**
-     * @var int
-     */
-    public $nAttachments = 0;
-    /**
-     * @var [Attachment]
-     */
-    public $attachments;
+    public string $transportName;
+    public string $recipientType;
+    public int $transportIndex;
+    public int $nVars = 0;
+    public array $vars;
+    public int $nSubnodes = 0;
+    public array $subnodes;
+    public int $nAttachments = 0;
+    public array $attachments;
 }

@@ -38,15 +38,15 @@ class Esker
     /**
      * @var QueryService
      */
-    private $queryService;
+    private QueryService $queryService;
     /**
      * @var SubmissionService
      */
-    private $submissionService;
+    private SubmissionService $submissionService;
     /**
      * @var Transport
      */
-    private $transport;
+    private Transport $transport;
 
     /**
      * Esker constructor.

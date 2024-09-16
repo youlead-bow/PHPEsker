@@ -8,16 +8,7 @@ namespace Esker\Submission;
  */
 class XMLDescription
 {
-    /**
-     * @var string
-     */
-    public $xmlFile;
-    /**
-     * @var int
-     */
-    public $nAttachments;
-    /**
-     * @var [Attachment]
-     */
-    public $attachments;
+    public string $xmlFile;
+    public int $nAttachments;
+    public array $attachments;
 }

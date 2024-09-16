@@ -8,8 +8,5 @@ namespace Esker\Submission;
  */
 class TransportAttachments
 {
-    /**
-     * @var [Attachment]
-     */
-    public $attachments;
+    public array $Attachment;
 }

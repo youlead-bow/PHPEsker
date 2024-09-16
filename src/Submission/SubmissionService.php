@@ -14,31 +14,18 @@ use SoapVar;
  */
 class SubmissionService
 {
-    /**
-     * @var SoapClient
-     */
-    public $client;
-    /**
-     * @var mixed
-     */
-    public $result;
-    /**
-     * @var ?EskerException
-     */
-    public $eskerException = null;
-    /**
-     * @var string
-     */
-    public $Url;
-    /**
-     * @var SessionHeader
-     */
-    public $SessionHeaderValue;
+    public SoapClient $client;
+    public mixed $result;
+    public ?EskerException $eskerException = null;
+    public string $Url;
+    public SessionHeader $SessionHeaderValue;
 
     /**
      * SubmissionService constructor.
      * @param string $wsdl
+     * @param bool $traceMode
      * @param bool $debugMode
+     * @throws SoapFault
      */
     public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
@@ -192,7 +179,7 @@ class SubmissionService
      * @param ConversionParameters $params
      * @return ConversionResult
      */
-    public function ConvertFile($inputFile, ConversionParameters $params): ConversionResult
+    public function ConvertFile(mixed $inputFile, ConversionParameters $params): ConversionResult
     {
         $this->_CheckEndPoint();
         $this->setSessionID($this->SessionHeaderValue->sessionID);
