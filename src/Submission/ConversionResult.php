@@ -9,4 +9,11 @@ namespace Esker\Submission;
 class ConversionResult
 {
     public File $convertedFile;
+
+    public function __construct()
+    {
+        $this->convertedFile = new File();
+    }
+
+
 }
