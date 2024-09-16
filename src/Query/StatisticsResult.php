@@ -8,24 +8,9 @@ namespace Esker\Query;
  */
 class StatisticsResult
 {
-    /**
-     * @var int
-     */
-    public $nTypes;
-    /**
-     * @var string
-     */
-    public $typeName;
-    /**
-     * @var string
-     */
-    public $typeContent;
-    /**
-     * @var int
-     */
-    public $nItems;
-    /**
-     * @var string
-     */
-    public $includeSubNodes;
+    public int $nTypes;
+    public string $typeName;
+    public string $typeContent;
+    public int $nItems;
+    public string $includeSubNodes;
 }

@@ -11,13 +11,13 @@ class Result
     /**
      * @var string
      */
-    public $noMoreItems;
+    public string $noMoreItems;
     /**
      * @var int
      */
-    public $nTransports;
+    public int $nTransports;
     /**
      * @var [Transport]
      */
-    public $transports;
+    public array $transports;
 }

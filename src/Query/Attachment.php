@@ -8,32 +8,11 @@ namespace Esker\Query;
  */
 class Attachment
 {
-    /**
-     * @var string
-     */
-    public $inputFormat;
-    /**
-     * @var string
-     */
-    public $outputFormat;
-    /**
-     * @var string
-     */
-    public $stylesheet;
-    /**
-     * @var string
-     */
-    public $outputName;
-    /**
-     * @var string
-     */
-    public $sourceAttachment;
-    /**
-     * @var int
-     */
-    public $nConvertedAttachments;
-    /**
-     * @var array
-     */
-    public $convertedAttachments;
+    public string $inputFormat;
+    public string $outputFormat;
+    public string $stylesheet;
+    public string $outputName;
+    public string $sourceAttachment;
+    public int $nConvertedAttachments;
+    public array $convertedAttachments;
 }

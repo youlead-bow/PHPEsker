@@ -8,16 +8,7 @@ namespace Esker\Query;
  */
 class StatisticsLine
 {
-    /**
-     * @var int
-     */
-    public $nStates;
-    /**
-     * @var array
-     */
-    public $states;
-    /**
-     * @var int
-     */
-    public $counts;
+    public int $nStates;
+    public array $states;
+    public int $counts;
 }

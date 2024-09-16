@@ -8,12 +8,6 @@ namespace Esker\Query;
  */
 class Attachments
 {
-    /**
-     * @var int
-     */
-    public $nAttachments;
-    /**
-     * @var [Attachment]
-     */
-    public $attachments;
+    public int $nAttachments;
+    public array $attachments;
 }
