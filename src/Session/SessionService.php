@@ -14,13 +14,14 @@ use SoapVar;
  * Class SessionService
  * @package Esker\Session
  */
-#[AllowDynamicProperties] class SessionService
+class SessionService
 {
     public SoapClient $client;
     public mixed $result;
     public ?EskerException $eskerException = null;
     public string $Url;
     public SessionHeader $SessionHeaderValue;
+    public array $requestHeaders;
 
     /**
      * SessionService constructor.
