@@ -8,16 +8,7 @@ namespace Esker\Query;
  */
 class Result
 {
-    /**
-     * @var string
-     */
     public string $noMoreItems;
-    /**
-     * @var int
-     */
     public int $nTransports;
-    /**
-     * @var [Transport]
-     */
     public array $transports;
 }
