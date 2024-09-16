@@ -13,13 +13,14 @@ use SoapVar;
  * Class SubmissionService
  * @package Esker\Submission
  */
-#[AllowDynamicProperties] class SubmissionService
+class SubmissionService
 {
     public SoapClient $client;
     public mixed $result;
     public ?EskerException $eskerException = null;
     public string $Url;
     public SessionHeader $SessionHeaderValue;
+    public array $requestHeaders;
 
     /**
      * SubmissionService constructor.
