@@ -137,7 +137,7 @@ class Esker
      * @param string $file
      * @return File
      */
-    private function _readFile(string $file): string
+    private function _readFile(string $file): File
     {
         $wsFile = new File();
         $wsFile->mode = Constant::WSFILE_MODE['MODE_INLINED'];

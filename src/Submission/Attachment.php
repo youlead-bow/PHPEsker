@@ -12,7 +12,7 @@ class Attachment
     public string $outputFormat;
     public string $stylesheet;
     public string $outputName;
-    public string $sourceAttachment;
+    public File $sourceAttachment;
     public int $nConvertedAttachments = 0;
     public array $convertedAttachments;
 }
