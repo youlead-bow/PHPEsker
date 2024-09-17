@@ -38,7 +38,8 @@
   "homepage": "https://github.com/youlead-bow/PHPEsker",
   "require": {
     "php": ">= 8.3",
-    "ext-soap": "*"
+    "ext-soap": "*",
+    "ext-mbstring": "*"
   },
   "autoload": {
     "psr-4": {

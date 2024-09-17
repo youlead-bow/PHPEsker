@@ -134,10 +134,10 @@ class SessionService
 
     /**
      * @param string $headerName
-     * @param string|array $headerValue
+     * @param array|string $headerValue
      * @return SessionService
      */
-    public function setHeader(string $headerName, $headerValue): SessionService
+    public function setHeader(string $headerName, array|string $headerValue): SessionService
     {
         if (!isset($this->requestHeaders)) {
             $this->requestHeaders = [$headerName => $headerValue];
