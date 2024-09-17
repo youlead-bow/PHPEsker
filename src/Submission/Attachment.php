@@ -15,4 +15,6 @@ class Attachment
     public File $sourceAttachment;
     public int $nConvertedAttachments = 0;
     public array $convertedAttachments;
+    public int $nVars = 0;
+    public array $vars;
 }

@@ -12,6 +12,6 @@ class SubNode
     public string $relativeName;
     public int $nSubnodes;
     public array $subNodes;
-    public int $nVars;
+    public int $nVars = 0;
     public array $vars;
 }
