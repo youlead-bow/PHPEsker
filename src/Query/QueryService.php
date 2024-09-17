@@ -2,44 +2,35 @@
 
 namespace Esker\Query;
 
+use Esker\Common\BaseService;
 use Esker\Exception\EskerException;
 use Esker\Submission\File;
-use SoapClient;
 use SoapFault;
-use SoapHeader;
-use SoapVar;
-
 /**
  * Class QueryService
  * @package Esker\Query
  */
-class QueryService
+class QueryService extends BaseService
 {
-    public SoapClient $client;
+    const string soapNS = 'urn:QueryService2';
+
     public mixed $result;
     public string $Url;
     public SessionHeader $SessionHeaderValue;
     public Header $QueryHeaderValue;
     public ?EskerException $eskerException = null;
     public string $RESOURCE_TYPE;
-    private array $soapHeaders;
-    private array $requestHeaders;
 
     /**
      * QueryService constructor.
      * @param string $wsdl
      * @param bool $traceMode
-     * @param bool $exceptionsMode
+     * @param bool $debugMode
      * @throws SoapFault
      */
-    public function __construct(string $wsdl, bool $traceMode = true, bool $exceptionsMode = false)
+    public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
-        $this->client = new SoapClient($wsdl, [
-                'trace' => $traceMode,
-                'exceptions' => $exceptionsMode,
-                'encoding' => 'utf-8'
-            ]
-        );
+        parent::__construct($wsdl, $traceMode, $debugMode);
     }
 
     /**
@@ -219,142 +210,21 @@ class QueryService
         return $statisticsResult;
     }
 
-    /**
-     * @param string $identifier
-     * @return ActionResult
-     */
-    public function Delete(string $identifier): ActionResult
+    public function QueryAction(string $action, string $identifier, ?Parameters $params = null, ?string $reason = null): ActionResult
     {
         $this->_CheckEndPoint();
         $this->setQueryHeader();
         $actionResult = new ActionResult();
         $param = ['identifier' => $identifier];
-        try {
-            $this->result = $this->client->__soapCall('Delete', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $actionResult->nSucceeded = $wrapper->nSucceeded;
-            $actionResult->nFailed = $wrapper->nFailed;
-            $actionResult->nItem = $wrapper->nItem;
-            $actionResult->transportIDs = $wrapper->transportIDs;
-            $actionResult->errorReason = $wrapper->errorReason;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
+        if(!is_null($params)){
+            $param['params'] = $params;
         }
-        return $actionResult;
-    }
-
-    /**
-     * @param string $identifier
-     * @return ActionResult
-     */
-    public function Cancel(string $identifier): ActionResult
-    {
-        $this->_CheckEndPoint();
-        $this->setQueryHeader();
-        $actionResult = new ActionResult();
-        $param = ['identifier' => $identifier];
-        try {
-            $this->result = $this->client->__soapCall('Cancel', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $actionResult->nSucceeded = $wrapper->nSucceeded;
-            $actionResult->nFailed = $wrapper->nFailed;
-            $actionResult->nItem = $wrapper->nItem;
-            $actionResult->transportIDs = $wrapper->transportIDs;
-            $actionResult->errorReason = $wrapper->errorReason;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
+        if(!is_null($reason)){
+            $param['reason'] = $reason;
         }
-        return $actionResult;
-    }
 
-    /**
-     * @param string $identifier
-     * @param ResubmitParameters $params
-     * @return ActionResult
-     */
-    public function Resubmit(string $identifier, ResubmitParameters $params): ActionResult
-    {
-        $this->_CheckEndPoint();
-        $this->setQueryHeader();
-        $actionResult = new ActionResult();
-        $param = ['identifier' => $identifier, 'params' => $params];
         try {
-            $this->result = $this->client->__soapCall('Resubmit', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $actionResult->nSucceeded = $wrapper->nSucceeded;
-            $actionResult->nFailed = $wrapper->nFailed;
-            $actionResult->nItem = $wrapper->nItem;
-            $actionResult->transportIDs = $wrapper->transportIDs;
-            $actionResult->errorReason = $wrapper->errorReason;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $actionResult;
-    }
-
-    /**
-     * @param string $identifier
-     * @param UpdateParameters $params
-     * @return ActionResult
-     */
-    public function Update(string $identifier, UpdateParameters $params): ActionResult
-    {
-        $this->_CheckEndPoint();
-        $this->setQueryHeader();
-        $actionResult = new ActionResult();
-        $param = ['identifier' => $identifier, 'params' => $params];
-        try {
-            $this->result = $this->client->__soapCall('Update', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $actionResult->nSucceeded = $wrapper->nSucceeded;
-            $actionResult->nFailed = $wrapper->nFailed;
-            $actionResult->nItem = $wrapper->nItem;
-            $actionResult->transportIDs = $wrapper->transportIDs;
-            $actionResult->errorReason = $wrapper->errorReason;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $actionResult;
-    }
-
-    public function Approve(string $identifier, string $reason): ActionResult
-    {
-        $this->_CheckEndPoint();
-        $this->setQueryHeader();
-        $actionResult = new ActionResult();
-        $param = ['identifier' => $identifier, 'reason' => $reason];
-        try {
-            $this->result = $this->client->__soapCall('Approve', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $actionResult->nSucceeded = $wrapper->nSucceeded;
-            $actionResult->nFailed = $wrapper->nFailed;
-            $actionResult->nItem = $wrapper->nItem;
-            $actionResult->transportIDs = $wrapper->transportIDs;
-            $actionResult->errorReason = $wrapper->errorReason;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $actionResult;
-    }
-
-    public function Reject(string $identifier, string $reason): ActionResult
-    {
-        $this->_CheckEndPoint();
-        $this->setQueryHeader();
-        $actionResult = new ActionResult();
-        $param = ['identifier' => $identifier, 'reason' => $reason];
-        try {
-            $this->result = $this->client->__soapCall('Reject', ['parameters' => $param]);
+            $this->result = $this->client->__soapCall($action, ['parameters' => $param]);
             $wrapper = $this->result->{'return'};
             $actionResult->nSucceeded = $wrapper->nSucceeded;
             $actionResult->nFailed = $wrapper->nFailed;
@@ -511,26 +381,5 @@ class QueryService
         }
         $this->client->__setSoapHeaders([]);
         $this->client->__setSoapHeaders($this->soapHeaders);
-    }
-
-
-    /**
-     * @param string $headerName
-     * @param array|string $headerValue
-     */
-    public function setHeader(string $headerName, array|string $headerValue): void
-    {
-        if (!isset($this->requestHeaders)) {
-            $this->requestHeaders = [$headerName => $headerValue];
-        } elseif (array_key_exists($headerName, $this->requestHeaders)) {
-            $this->requestHeaders[$headerName] = array_merge($this->requestHeaders[$headerName], $headerValue);
-        } else {
-            $this->requestHeaders[$headerName] = $headerValue;
-        }
-        $headers = [];
-        foreach ($this->requestHeaders as $key => $values) {
-            $headers[] = new SoapHeader('urn:QueryService2', $key, new SoapVar($values, SOAP_ENC_OBJECT), false);
-        }
-        $this->soapHeaders = $headers;
     }
 }

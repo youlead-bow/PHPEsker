@@ -7,6 +7,7 @@ use Esker\Exception\BindingException;
 use Esker\Exception\LoginException;
 use Esker\Exception\SubmitTransportException;
 use Esker\Query\Header;
+use Esker\Query\Parameters;
 use Esker\Query\QueryService;
 use Esker\Query\Request;
 use Esker\Session\SessionService;
@@ -201,14 +202,19 @@ class Esker
         return substr($filename, $i + 1);
     }
 
+    private function setQueryHeader(): void
+    {
+        $this->queryService->QueryHeaderValue = new Header();
+        $this->queryService->QueryHeaderValue->recipientType = 'MOD';
+    }
+
     /**
      * @param string $ruidex
      * @return ?Query\Result
      */
     public function getLetterStatuses(string $ruidex): ?Query\Result
     {
-        $this->queryService->QueryHeaderValue = new Header();
-        $this->queryService->QueryHeaderValue->recipientType = 'MOD';
+        $this->setQueryHeader();
         $request = new Request();
         $request->nItems = 1;
         $request->attributes = '';
@@ -218,8 +224,43 @@ class Esker
 
     public function getStatistics(string $ruidex): Query\StatisticsResult
     {
-        $this->queryService->QueryHeaderValue = new Header();
-        $this->queryService->QueryHeaderValue->recipientType = 'MOD';
+        $this->setQueryHeader();
         return $this->queryService->QueryStatistics('(&(RuidEx=' . $ruidex . '))');
+    }
+
+    public function delete(string $identifier): Query\ActionResult
+    {
+        $this->setQueryHeader();
+        return $this->queryService->QueryAction('Delete', $identifier);
+    }
+
+    public function cancel(string $identifier): Query\ActionResult
+    {
+        $this->setQueryHeader();
+        return $this->queryService->QueryAction('Cancel', $identifier);
+    }
+
+    public function resubmit(string $identifier, Parameters $params): Query\ActionResult
+    {
+        $this->setQueryHeader();
+        return $this->queryService->QueryAction('Resubmit', $identifier, $params);
+    }
+
+    public function update(string $identifier, Parameters $params): Query\ActionResult
+    {
+        $this->setQueryHeader();
+        return $this->queryService->QueryAction('Update', $identifier, $params);
+    }
+
+    public function approve(string $identifier, string $reason): Query\ActionResult
+    {
+        $this->setQueryHeader();
+        return $this->queryService->QueryAction('Approve', $identifier, reason: $reason);
+    }
+
+    public function reject(string $identifier, string $reason): Query\ActionResult
+    {
+        $this->setQueryHeader();
+        return $this->queryService->QueryAction('Reject', $identifier, reason: $reason);
     }
 }

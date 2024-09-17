@@ -2,40 +2,34 @@
 
 namespace Esker\Session;
 
-use AllowDynamicProperties;
+use Esker\Common\BaseService;
 use Esker\Exception\EskerException;
 use Esker\Query\SessionHeader;
-use SoapClient;
 use SoapFault;
-use SoapHeader;
-use SoapVar;
 
 /**
  * Class SessionService
  * @package Esker\Session
  */
-class SessionService
+class SessionService extends BaseService
 {
-    public SoapClient $client;
+    const string soapNS = 'urn:SessionService2';
+
     public mixed $result;
     public ?EskerException $eskerException = null;
     public string $Url;
     public SessionHeader $SessionHeaderValue;
-    public array $requestHeaders;
 
     /**
      * SessionService constructor.
      * @param string $wsdl
-     * @param bool $exceptionsMode
+     * @param bool $traceMode
+     * @param bool $debugMode
      * @throws SoapFault
      */
-    public function __construct(string $wsdl, bool $exceptionsMode = false)
+    public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
-        $this->client = new SoapClient($wsdl, [
-                'exceptions' => true,
-                'encoding' => 'utf-8'
-            ]
-        );
+        parent::__construct($wsdl, $traceMode, $debugMode);
     }
 
     /**
@@ -129,28 +123,6 @@ class SessionService
     {
         $element = array('sessionID' => $session);
         $this->setHeader('SessionHeaderValue', $element);
-        return $this;
-    }
-
-    /**
-     * @param string $headerName
-     * @param array|string $headerValue
-     * @return SessionService
-     */
-    public function setHeader(string $headerName, array|string $headerValue): SessionService
-    {
-        if (!isset($this->requestHeaders)) {
-            $this->requestHeaders = [$headerName => $headerValue];
-        } elseif (array_key_exists($headerName, $this->requestHeaders)) {
-            $this->requestHeaders[$headerName] = array_merge($this->requestHeaders[$headerName], $headerValue);
-        } else {
-            $this->requestHeaders[$headerName] = $headerValue;
-        }
-        $headers = [];
-        foreach ($this->requestHeaders as $key => $values) {
-            $headers[] = new SoapHeader('urn:SessionService2', $key, new SoapVar($values, SOAP_ENC_OBJECT));
-        }
-        $this->client->__setSoapHeaders($headers);
         return $this;
     }
 }

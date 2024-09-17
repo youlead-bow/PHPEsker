@@ -2,25 +2,22 @@
 
 namespace Esker\Submission;
 
-use AllowDynamicProperties;
+use Esker\Common\BaseService;
 use Esker\Exception\EskerException;
-use SoapClient;
 use SoapFault;
-use SoapHeader;
-use SoapVar;
 
 /**
  * Class SubmissionService
  * @package Esker\Submission
  */
-class SubmissionService
+class SubmissionService extends BaseService
 {
-    public SoapClient $client;
+    const string soapNS = 'urn:SubmissionService2';
+
     public mixed $result;
     public ?EskerException $eskerException = null;
     public string $Url;
     public SessionHeader $SessionHeaderValue;
-    public array $requestHeaders;
 
     /**
      * SubmissionService constructor.
@@ -31,12 +28,7 @@ class SubmissionService
      */
     public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
-        $this->client = new SoapClient($wsdl, [
-                'exceptions' => $debugMode,
-                'trace' => $traceMode,
-                'encoding' => 'utf-8',
-            ]
-        );
+        parent::__construct($wsdl, $traceMode, $debugMode);
     }
 
     /**
@@ -47,6 +39,26 @@ class SubmissionService
         $this->client->__setLocation($this->Url);
     }
 
+    public function SubmissionAction(string $name, array $param): Result
+    {
+        $this->_CheckEndPoint();
+        $this->setSessionID($this->SessionHeaderValue->sessionID);
+        $submissionResult = new Result();
+
+        try {
+            $this->result = $this->client->__soapCall($name, ['parameters' => $param]);
+            $wrapper = $this->result->{'return'};
+            $submissionResult->submissionID = $wrapper->submissionID;
+            $submissionResult->transportID = $wrapper->transportID;
+            $this->eskerException = null;
+        } catch (SoapFault $fault) {
+            $this->eskerException = new EskerException();
+            $this->eskerException->Message = $fault->faultstring;
+        }
+
+        return $submissionResult;
+    }
+
     /**
      * @param string $subject
      * @param BusinessData $document
@@ -55,21 +67,8 @@ class SubmissionService
      */
     public function Submit(string $subject, BusinessData $document, BusinessRules $rules): Result
     {
-        $this->_CheckEndPoint();
-        $this->setSessionID($this->SessionHeaderValue->sessionID);
-        $submissionResult = new Result();
         $param = ['subject' => $subject, 'document' => $document, 'rules' => $rules];
-        try {
-            $this->result = $this->client->__soapCall('Submit', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $submissionResult->submissionID = $wrapper->submissionID;
-            $submissionResult->transportID = $wrapper->transportID;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $submissionResult;
+        return $this->SubmissionAction('Submit', $param);
     }
 
     /**
@@ -78,21 +77,8 @@ class SubmissionService
      */
     public function SubmitTransport(Transport $transport): Result
     {
-        $this->_CheckEndPoint();
-        $this->setSessionID($this->SessionHeaderValue->sessionID);
-        $submissionResult = new Result();
         $param = ['transport' => (array)$transport];
-        try {
-            $this->result = $this->client->__soapCall('SubmitTransport', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $submissionResult->submissionID = $wrapper->submissionID;
-            $submissionResult->transportID = $wrapper->transportID;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $submissionResult;
+        return $this->SubmissionAction('SubmitTransport', $param);
     }
 
     /**
@@ -101,21 +87,29 @@ class SubmissionService
      */
     public function SubmitXML(string $xml): Result
     {
+        $param = ['xml' => $xml];
+        return $this->SubmissionAction('SubmitXML', $param);
+    }
+
+    public function ExtractAction(string $name, array $parameters): ExtractionResult
+    {
         $this->_CheckEndPoint();
         $this->setSessionID($this->SessionHeaderValue->sessionID);
-        $submissionResult = new Result();
-        $param = ['xml' => $xml];
+        $extractionResult = new ExtractionResult();
+
         try {
-            $this->result = $this->client->__soapCall('SubmitXML', ['parameters' => $param]);
+            $this->result = $this->client->__soapCall($name, ['parameters' => $parameters]);
             $wrapper = $this->result->{'return'};
-            $submissionResult->submissionID = $wrapper->submissionID;
-            $submissionResult->transportID = $wrapper->transportID;
+            $extractionResult->noMoreItems = $wrapper->noMoreItems;
+            $extractionResult->nTransports = $wrapper->nTransports;
+            $extractionResult->transports = $wrapper->transports;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
             $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
-        return $submissionResult;
+
+        return $extractionResult;
     }
 
     /**
@@ -129,22 +123,8 @@ class SubmissionService
         BusinessRules $rules,
         ExtractionParameters $param
     ): ExtractionResult {
-        $this->_CheckEndPoint();
-        $this->setSessionID($this->SessionHeaderValue->sessionID);
-        $extractionResult = new ExtractionResult();
         $parameters = ['document' => $document, 'rules' => $rules, 'param' => $param];
-        try {
-            $this->result = $this->client->__soapCall('ExtractFirst', ['parameters' => $parameters]);
-            $wrapper = $this->result->{'return'};
-            $extractionResult->noMoreItems = $wrapper->noMoreItems;
-            $extractionResult->nTransports = $wrapper->nTransports;
-            $extractionResult->transports = $wrapper->transports;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $extractionResult;
+        return $this->ExtractAction('ExtractFirst', $parameters);
     }
 
     /**
@@ -158,22 +138,8 @@ class SubmissionService
         BusinessRules $rules,
         ExtractionParameters $param
     ): ExtractionResult {
-        $this->_CheckEndPoint();
-        $this->setSessionID($this->SessionHeaderValue->sessionID);
-        $extractionResult = new ExtractionResult();
         $parameters = ['document' => $document, 'rules' => $rules, 'param' => $param];
-        try {
-            $this->result = $this->client->__soapCall('ExtractNext', ['parameters' => $parameters]);
-            $wrapper = $this->result->{'return'};
-            $extractionResult->noMoreItems = $wrapper->noMoreItems;
-            $extractionResult->nTransports = $wrapper->nTransports;
-            $extractionResult->transports = $wrapper->transports;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $extractionResult;
+        return $this->ExtractAction('ExtractNext', $parameters);
     }
 
     /**
@@ -242,7 +208,7 @@ class SubmissionService
             'resource' => $resource,
             'type' => $type,
             'published' => $published,
-            'overwritePrevious' => $overwritePrevious
+            'overwritePrevious' => $overwritePrevious,
         ];
         try {
             $this->result = $this->client->__soapCall('RegisterResource', array('parameters' => $param));
@@ -300,19 +266,14 @@ class SubmissionService
         }
     }
 
-    /**
-     * @param string $fileContent
-     * @param string $name
-     * @return File
-     */
-    public function UploadFile(string $fileContent, string $name): File
+    public function UploadFileAction(string $name, array $param): File
     {
         $this->_CheckEndPoint();
         $this->setSessionID($this->SessionHeaderValue->sessionID);
         $wsfile = new File();
-        $param = ['fileContent' => $fileContent, 'name' => $name];
+
         try {
-            $this->result = $this->client->__soapCall('UploadFile', ['parameters' => $param]);
+            $this->result = $this->client->__soapCall($name, ['parameters' => $param]);
             $wrapper = $this->result->{'return'};
             $wsfile->name = $wrapper->name;
             $wsfile->mode = $wrapper->mode;
@@ -324,7 +285,19 @@ class SubmissionService
             $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
+
         return $wsfile;
+    }
+
+    /**
+     * @param string $fileContent
+     * @param string $name
+     * @return File
+     */
+    public function UploadFile(string $fileContent, string $name): File
+    {
+        $param = ['fileContent' => $fileContent, 'name' => $name];
+        return $this->UploadFileAction('UploadFile', $param);
     }
 
     /**
@@ -334,24 +307,8 @@ class SubmissionService
      */
     public function UploadFileAppend(string $fileContent, string $destWSFile): File
     {
-        $this->_CheckEndPoint();
-        $this->setSessionID($this->SessionHeaderValue->sessionID);
-        $wsfile = new File();
         $param = ['fileContent' => $fileContent, 'destWSFile' => $destWSFile];
-        try {
-            $this->result = $this->client->__soapCall('UploadFileAppend', ['parameters' => $param]);
-            $wrapper = $this->result->{'return'};
-            $wsfile->name = $wrapper->name;
-            $wsfile->mode = $wrapper->mode;
-            $wsfile->content = $wrapper->content;
-            $wsfile->url = $wrapper->url;
-            $wsfile->storageID = $wrapper->storageID;
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $wsfile;
+        return $this->UploadFileAction('UploadFileAppend', $param);
     }
 
     /**
@@ -362,28 +319,6 @@ class SubmissionService
     {
         $element = array('sessionID' => $session);
         $this->setHeader('SessionHeaderValue', $element);
-        return $this;
-    }
-
-    /**
-     * @param string $headerName
-     * @param array|string $headerValue
-     * @return SubmissionService
-     */
-    public function setHeader(string $headerName, array|string $headerValue): SubmissionService
-    {
-        if (!isset($this->requestHeaders)) {
-            $this->requestHeaders = [$headerName => $headerValue];
-        } elseif (array_key_exists($headerName, $this->requestHeaders)) {
-            $this->requestHeaders[$headerName] = array_merge($this->requestHeaders[$headerName], $headerValue);
-        } else {
-            $this->requestHeaders[$headerName] = $headerValue;
-        }
-        $headers = [];
-        foreach ($this->requestHeaders as $key => $values) {
-            $headers[] = new SoapHeader('urn:SubmissionService2', $key, new SoapVar($values, SOAP_ENC_OBJECT));
-        }
-        $this->client->__setSoapHeaders($headers);
         return $this;
     }
 }
