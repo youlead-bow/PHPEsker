@@ -1,6 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
+use Esker\Common\Constant;
 use Esker\Common\Debug;
 use Esker\Esker;
 
@@ -16,12 +17,12 @@ try {
         $need_validate = false;
         $error_message = '';
         $error_code = 0;
-        $validation_state = \Esker\Common\Constant::VALIDATION_STATES['FR'][1];
-        echo 'Statut : ' . \Esker\Common\Constant::STATES['FR'][$transport->state] . '<br>';
+        $validation_state = Constant::VALIDATION_STATES['FR'][1];
+        echo 'Statut : ' . Constant::STATES['FR'][$transport->state] . '<br>';
         foreach ($transport->vars as $var) {
             switch ($var->attribute) {
                 case 'ValidationState':
-                    $validation_state = \Esker\Common\Constant::VALIDATION_STATES['FR'][$var->simpleValue];
+                    $validation_state = Constant::VALIDATION_STATES['FR'][$var->simpleValue];
                     break;
                 case 'ShortStatus':
                     $error_message = $var->simpleValue;
