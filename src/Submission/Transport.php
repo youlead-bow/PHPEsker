@@ -12,7 +12,7 @@ class Transport
 {
     public string $transportName;
     public string $recipientType;
-    public int $transportIndex;
+    public string $transportIndex = '';
     public int $nVars = 0;
     public TransportVars $vars;
     public int $nSubnodes = 0;
