@@ -83,6 +83,7 @@ class SubmissionService
         $submissionResult = new Result();
         $param = ['transport' => (array)$transport];
         try {
+            dump($param);
             $this->result = $this->client->__soapCall('SubmitTransport', ['parameters' => $param]);
             $wrapper = $this->result->{'return'};
             $submissionResult->submissionID = $wrapper->submissionID;
