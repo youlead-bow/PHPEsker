@@ -15,7 +15,6 @@ class QueryService extends BaseService
     const string soapNS = 'urn:QueryService2';
 
     public mixed $result;
-    public string $Url;
     public SessionHeader $SessionHeaderValue;
     public Header $QueryHeaderValue;
     public ?EskerException $eskerException = null;
@@ -31,14 +30,6 @@ class QueryService extends BaseService
     public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
         parent::__construct($wsdl, $traceMode, $debugMode);
-    }
-
-    /**
-     * @Return void
-     */
-    private function _CheckEndPoint(): void
-    {
-        $this->client->__setLocation($this->Url);
     }
 
     /**
@@ -239,25 +230,32 @@ class QueryService extends BaseService
         return $actionResult;
     }
 
-    /**
-     * @param string $wsFile
-     * @return string
-     */
-    public function DownloadFile(string $wsFile): string
+    public function DownloadFileAction(string $name, array $param): string
     {
         $this->_CheckEndPoint();
         $this->setQueryHeader();
         $resultFile = '';
-        $param = ['wsFile' => $wsFile];
+
         try {
-            $this->result = $this->client->__soapCall('DownloadFile', ['parameters' => $param]);
+            $this->result = $this->client->__soapCall($name, ['parameters' => $param]);
             $resultFile = $this->result->{'return'};
             $this->eskerException = null;
         } catch (SoapFault $fault) {
             $this->eskerException = new EskerException();
             $this->eskerException->Message = $fault->faultstring;
         }
+
         return $resultFile;
+    }
+
+    /**
+     * @param string $wsFile
+     * @return string
+     */
+    public function DownloadFile(string $wsFile): string
+    {
+        $param = ['wsFile' => $wsFile];
+        return $this->DownloadFileAction('DownloadFile', $param);
     }
 
     /**
@@ -268,19 +266,8 @@ class QueryService extends BaseService
      */
     public function DownloadFileChunk(File $wsFile, int $uPos, int $uChunkSize): string
     {
-        $this->_CheckEndPoint();
-        $this->setQueryHeader();
-        $resultFile = '';
         $param = ['wsFile' => $wsFile, 'uPos' => $uPos, 'uChunkSize' => $uChunkSize];
-        try {
-            $this->result = $this->client->__soapCall('DownloadFileChunck', ['parameters' => $param]);
-            $resultFile = $this->result->{'return'};
-            $this->eskerException = null;
-        } catch (SoapFault $fault) {
-            $this->eskerException = new EskerException();
-            $this->eskerException->Message = $fault->faultstring;
-        }
-        return $resultFile;
+        return $this->DownloadFileAction('DownloadFileChunck', $param);
     }
 
     /**
@@ -340,15 +327,6 @@ class QueryService extends BaseService
             }
         }
         return $attachments;
-    }
-
-    /**
-     * @param string $session
-     */
-    public function setSessionID(string $session): void
-    {
-        $element = ['sessionID' => $session];
-        $this->setHeader('SessionHeaderValue', $element);
     }
 
     /**

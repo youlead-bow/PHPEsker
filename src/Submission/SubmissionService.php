@@ -16,7 +16,6 @@ class SubmissionService extends BaseService
 
     public mixed $result;
     public ?EskerException $eskerException = null;
-    public string $Url;
     public SessionHeader $SessionHeaderValue;
 
     /**
@@ -29,14 +28,6 @@ class SubmissionService extends BaseService
     public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
         parent::__construct($wsdl, $traceMode, $debugMode);
-    }
-
-    /**
-     *
-     */
-    public function _CheckEndPoint(): void
-    {
-        $this->client->__setLocation($this->Url);
     }
 
     public function SubmissionAction(string $name, array $param): Result
@@ -309,16 +300,5 @@ class SubmissionService extends BaseService
     {
         $param = ['fileContent' => $fileContent, 'destWSFile' => $destWSFile];
         return $this->UploadFileAction('UploadFileAppend', $param);
-    }
-
-    /**
-     * @param string $session
-     * @return SubmissionService
-     */
-    public function setSessionID(string $session): SubmissionService
-    {
-        $element = array('sessionID' => $session);
-        $this->setHeader('SessionHeaderValue', $element);
-        return $this;
     }
 }

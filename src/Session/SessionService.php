@@ -17,7 +17,6 @@ class SessionService extends BaseService
 
     public mixed $result;
     public ?EskerException $eskerException = null;
-    public string $Url;
     public SessionHeader $SessionHeaderValue;
 
     /**
@@ -30,18 +29,6 @@ class SessionService extends BaseService
     public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
     {
         parent::__construct($wsdl, $traceMode, $debugMode);
-    }
-
-    /**
-     *
-     */
-    public function _CheckEndPoint(): void
-    {
-        /*if( $this->Url != $this->client->forceEndpoint )
-        {
-            $this->client->setEndpoint($this->Url);
-            $this->client->useHTTPPersistentConnection();
-        }*/
     }
 
     /**
@@ -113,16 +100,5 @@ class SessionService extends BaseService
             $this->eskerException->Message = 'Unable to call Esker Logout Service';
             trigger_error($this->eskerException->Message, E_USER_ERROR);
         }
-    }
-
-    /**
-     * @param string $session
-     * @return SessionService
-     */
-    public function setSessionID(string $session): SessionService
-    {
-        $element = array('sessionID' => $session);
-        $this->setHeader('SessionHeaderValue', $element);
-        return $this;
     }
 }
