@@ -211,7 +211,7 @@ class Esker
         $this->queryService->QueryHeaderValue->recipientType = 'MOD';
         $request = new Request();
         $request->nItems = 1;
-        $request->attributes = [];
+        $request->attributes = '';
         $request->filter = '(&(RuidEx=' . $ruidex . '))';
         return $this->queryService->QueryFirst($request);
     }

@@ -8,9 +8,9 @@ namespace Esker\Query;
  */
 class Transport
 {
-    public string $transportID;
-    public string $transportName;
-    public string $recipientType;
+    public string $transportID = '';
+    public string $transportName = '';
+    public string $recipientType = '';
     public string $state;
     public int $nVars;
     public array $vars;

@@ -8,7 +8,7 @@ namespace Esker\Query;
  */
 class Result
 {
-    public string $noMoreItems;
-    public int $nTransports;
-    public array $transports;
+    public bool $noMoreItems;
+    public int $nTransports = 0;
+    public array $transports = [];
 }

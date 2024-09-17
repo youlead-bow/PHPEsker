@@ -12,5 +12,5 @@ class ActionResult
     public int $nFailed;
     public int $nItem;
     public array $transportIDs;
-    public string $errorReason;
+    public string $errorReason = '';
 }

@@ -10,9 +10,9 @@ use Esker\Common\Constant;
  */
 class Request
 {
-    public string $filter;
-    public string $sortOrder;
-    public array $attributes;
+    public string $filter = '';
+    public string $sortOrder = '';
+    public string $attributes = '';
     public int $nItems;
     public string $includeSubNodes = 'false';
     public string $searchInArchive = 'false';

@@ -8,6 +8,6 @@ namespace Esker\Query;
  */
 class Header
 {
-    public string $queryID;
-    public string $recipientType;
+    public string $queryID = '';
+    public string $recipientType = '';
 }

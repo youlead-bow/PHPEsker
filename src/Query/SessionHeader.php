@@ -8,5 +8,5 @@ namespace Esker\Query;
  */
 class SessionHeader
 {
-    public string $sessionID;
+    public string $sessionID = '';
 }
