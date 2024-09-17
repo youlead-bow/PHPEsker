@@ -215,4 +215,11 @@ class Esker
         $request->filter = '(&(RuidEx=' . $ruidex . '))';
         return $this->queryService->QueryFirst($request);
     }
+
+    public function getStatistics(string $ruidex): Query\StatisticsResult
+    {
+        $this->queryService->QueryHeaderValue = new Header();
+        $this->queryService->QueryHeaderValue->recipientType = 'MOD';
+        return $this->queryService->QueryStatistics('(&(RuidEx=' . $ruidex . '))');
+    }
 }

@@ -200,15 +200,17 @@ class QueryService
         $this->_CheckEndPoint();
         $this->setQueryHeader();
         $statisticsResult = new StatisticsResult();
+        $statisticsLine = new StatisticsLine();
         $param = ['filter' => $filter];
         try {
             $this->result = $this->client->__soapCall('QueryStatistics', ['parameters' => $param]);
             $wrapper = $this->result->{'return'};
             $statisticsResult->nTypes = $wrapper->nTypes;
-            $statisticsResult->typeName = $wrapper->typeName;
-            $statisticsResult->typeContent = $wrapper->typeContent;
-            $statisticsResult->nItems = $wrapper->nItems;
-            $statisticsResult->includeSubNodes = $wrapper->includeSubNodes;
+            $statisticsResult->typeName = $wrapper->typeName->{'string'};
+            $statisticsLine->nStates = $wrapper->typeContent->StatisticsLine->nStates;
+            $statisticsLine->states = $wrapper->typeContent->StatisticsLine->states->{'int'};
+            $statisticsLine->counts = $wrapper->typeContent->StatisticsLine->counts->{'int'};
+            $statisticsResult->typeContent = $statisticsLine;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
             $this->eskerException = new EskerException();

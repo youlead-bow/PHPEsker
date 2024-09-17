@@ -9,6 +9,6 @@ namespace Esker\Query;
 class StatisticsLine
 {
     public int $nStates;
-    public array $states;
+    public int $states;
     public int $counts;
 }
