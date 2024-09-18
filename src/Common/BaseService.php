@@ -37,7 +37,7 @@ class BaseService
 
     public function getResult(): mixed
     {
-        return $this->result;
+        return $this->result->{'return'};
     }
 
     public function _CheckEndPoint(): void
