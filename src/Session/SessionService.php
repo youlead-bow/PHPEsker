@@ -4,7 +4,6 @@ namespace Esker\Session;
 
 use Esker\Common\BaseService;
 use Esker\Exception\EskerException;
-use Esker\Query\SessionHeader;
 use SoapFault;
 
 /**
@@ -57,7 +56,7 @@ class SessionService extends BaseService
             $this->result = $this->client->__soapCall('Login', ['parameters' => $param]);
             $wrapper = $this->result->{'return'};
             $loginResult->sessionID = $wrapper->sessionID;
-            $this->SessionHeaderValue = new SessionHeader();
+            $this->SessionHeaderValue = new Header();
             $this->SessionHeaderValue->sessionID = $loginResult->sessionID;
             $this->eskerException = null;
         } catch (SoapFault $fault) {

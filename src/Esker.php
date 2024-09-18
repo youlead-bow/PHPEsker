@@ -6,15 +6,15 @@ use Esker\Common\Constant;
 use Esker\Exception\BindingException;
 use Esker\Exception\LoginException;
 use Esker\Exception\SubmitTransportException;
-use Esker\Query\Header;
+use Esker\Query\Header as QueryHeader;
 use Esker\Query\Parameters;
 use Esker\Query\QueryService;
 use Esker\Query\Request;
+use Esker\Session\Header;
 use Esker\Session\SessionService;
 use Esker\Submission\Attachment;
 use Esker\Submission\File;
 use Esker\Submission\Result;
-use Esker\Submission\SessionHeader;
 use Esker\Submission\SubmissionService;
 use Esker\Submission\SVar;
 use Esker\Submission\Transport;
@@ -53,11 +53,11 @@ class Esker
         }
         $this->submissionService = new SubmissionService($bindings->submissionServiceWSDL, $traceMode, $exceptionsMode);
         $this->submissionService->Url = $bindings->submissionServiceLocation;
-        $this->submissionService->SessionHeaderValue = new SessionHeader();
+        $this->submissionService->SessionHeaderValue = new Header();
         $this->submissionService->SessionHeaderValue->sessionID = $login->sessionID;
         $this->queryService = new QueryService($bindings->queryServiceWSDL, $traceMode, $exceptionsMode);
         $this->queryService->Url = $bindings->queryServiceLocation;
-        $this->queryService->SessionHeaderValue = new Query\SessionHeader();
+        $this->queryService->SessionHeaderValue = new Header();
         $this->queryService->SessionHeaderValue->sessionID = $login->sessionID;
     }
 
@@ -206,7 +206,7 @@ class Esker
     private function setQueryHeader(): void
     {
         $this->query = true;
-        $this->queryService->QueryHeaderValue = new Header();
+        $this->queryService->QueryHeaderValue = new QueryHeader();
         $this->queryService->QueryHeaderValue->recipientType = 'MOD';
     }
 
