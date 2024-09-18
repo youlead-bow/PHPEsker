@@ -14,21 +14,6 @@ class SubmissionService extends BaseService
 {
     const string soapNS = 'urn:SubmissionService2';
 
-    public ?EskerException $eskerException = null;
-    public SessionHeader $SessionHeaderValue;
-
-    /**
-     * SubmissionService constructor.
-     * @param string $wsdl
-     * @param bool $traceMode
-     * @param bool $debugMode
-     * @throws SoapFault
-     */
-    public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
-    {
-        parent::__construct($wsdl, $traceMode, $debugMode);
-    }
-
     public function SubmissionAction(string $name, array $param): Result
     {
         $this->_CheckEndPoint();

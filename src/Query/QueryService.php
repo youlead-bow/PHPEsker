@@ -14,22 +14,8 @@ class QueryService extends BaseService
 {
     const string soapNS = 'urn:QueryService2';
 
-    public SessionHeader $SessionHeaderValue;
     public Header $QueryHeaderValue;
-    public ?EskerException $eskerException = null;
     public string $RESOURCE_TYPE;
-
-    /**
-     * QueryService constructor.
-     * @param string $wsdl
-     * @param bool $traceMode
-     * @param bool $debugMode
-     * @throws SoapFault
-     */
-    public function __construct(string $wsdl, bool $traceMode = true, bool $debugMode = false)
-    {
-        parent::__construct($wsdl, $traceMode, $debugMode);
-    }
 
     /**
      * @param Request $request

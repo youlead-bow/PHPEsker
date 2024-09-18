@@ -3,7 +3,9 @@
 namespace Esker\Common;
 
 
+use Esker\Exception\EskerException;
 use Esker\Query\QueryService;
+use Esker\Query\SessionHeader;
 use Esker\Session\SessionService;
 use SoapClient;
 use SoapFault;
@@ -15,6 +17,8 @@ class BaseService
     public SoapClient $client;
     public array $requestHeaders;
     public string $Url;
+    public SessionHeader $SessionHeaderValue;
+    public ?EskerException $eskerException = null;
     protected mixed $result;
     protected array $soapHeaders;
 
