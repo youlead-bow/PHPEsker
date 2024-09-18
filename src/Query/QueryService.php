@@ -296,7 +296,7 @@ class QueryService extends BaseService
         if ($attachments->nAttachments > 1) {
             $attachments->attachments = $wrapper->attachments->Attachment;
         } else {
-            $attachments->attachments[0] = (object)$wrapper->attachments->Attachment;
+            $attachments->attachments[0] = $wrapper->attachments->Attachment;
         }
         for ($i = 0; $i < $attachments->nAttachments; $i++) {
             $attachments->attachments[$i] = (object)$attachments->attachments[$i];
