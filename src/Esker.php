@@ -2,6 +2,7 @@
 
 namespace Esker;
 
+use Esker\Common\Attachment;
 use Esker\Common\Constant;
 use Esker\Common\CVar;
 use Esker\Exception\BindingException;
@@ -13,7 +14,6 @@ use Esker\Query\QueryService;
 use Esker\Query\Request;
 use Esker\Session\Header;
 use Esker\Session\SessionService;
-use Esker\Submission\Attachment;
 use Esker\Submission\File;
 use Esker\Submission\Result;
 use Esker\Submission\SubmissionService;
