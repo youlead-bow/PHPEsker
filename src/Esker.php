@@ -230,6 +230,12 @@ class Esker
         return $this->queryService->QueryStatistics('(&(RuidEx=' . $ruidex . '))');
     }
 
+    public function getAttachments(string $identifier, string $filter, string $mode): Query\Attachments
+    {
+        $this->setQueryHeader();
+        return $this->queryService->QueryAttachments($identifier, $filter, $mode);
+    }
+
     public function delete(string $identifier): Query\ActionResult
     {
         $this->setQueryHeader();
