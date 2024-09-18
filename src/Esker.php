@@ -3,6 +3,7 @@
 namespace Esker;
 
 use Esker\Common\Constant;
+use Esker\Common\CVar;
 use Esker\Exception\BindingException;
 use Esker\Exception\LoginException;
 use Esker\Exception\SubmitTransportException;
@@ -16,7 +17,6 @@ use Esker\Submission\Attachment;
 use Esker\Submission\File;
 use Esker\Submission\Result;
 use Esker\Submission\SubmissionService;
-use Esker\Submission\SVar;
 use Esker\Submission\Transport;
 use Esker\Submission\TransportAttachments;
 use Esker\Submission\TransportVars;
@@ -102,11 +102,11 @@ class Esker
     /**
      * @param string $nom
      * @param string $valeur
-     * @return SVar
+     * @return CVar
      */
-    private function _buildVariableTag(string $nom, string $valeur): SVar
+    private function _buildVariableTag(string $nom, string $valeur): CVar
     {
-        $var = new SVar();
+        $var = new CVar();
         $var->attribute = $nom;
         $var->simpleValue = $valeur;
         $var->type = 'TYPE_STRING';
