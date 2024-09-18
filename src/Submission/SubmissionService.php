@@ -14,7 +14,6 @@ class SubmissionService extends BaseService
 {
     const string soapNS = 'urn:SubmissionService2';
 
-    public mixed $result;
     public ?EskerException $eskerException = null;
     public SessionHeader $SessionHeaderValue;
 

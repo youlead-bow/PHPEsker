@@ -15,6 +15,7 @@ class BaseService
     public SoapClient $client;
     public array $requestHeaders;
     public string $Url;
+    protected mixed $result;
     protected array $soapHeaders;
 
     /**
@@ -28,6 +29,11 @@ class BaseService
                 'encoding' => 'utf-8',
             ]
         );
+    }
+
+    public function getResult(): mixed
+    {
+        return $this->result;
     }
 
     public function _CheckEndPoint(): void

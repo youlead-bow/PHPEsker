@@ -26,6 +26,7 @@ use Esker\Submission\TransportVars;
  */
 class Esker
 {
+    private bool $query = false;
     private QueryService $queryService;
     private SubmissionService $submissionService;
     private Transport $transport;
@@ -204,6 +205,7 @@ class Esker
 
     private function setQueryHeader(): void
     {
+        $this->query = true;
         $this->queryService->QueryHeaderValue = new Header();
         $this->queryService->QueryHeaderValue->recipientType = 'MOD';
     }
@@ -262,5 +264,14 @@ class Esker
     {
         $this->setQueryHeader();
         return $this->queryService->QueryAction('Reject', $identifier, reason: $reason);
+    }
+
+    public function getRawResult(): mixed
+    {
+        if(!$this->query) {
+            return $this->submissionService->getResult();
+        }
+
+        return $this->queryService->getResult();
     }
 }

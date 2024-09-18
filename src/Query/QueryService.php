@@ -14,7 +14,6 @@ class QueryService extends BaseService
 {
     const string soapNS = 'urn:QueryService2';
 
-    public mixed $result;
     public SessionHeader $SessionHeaderValue;
     public Header $QueryHeaderValue;
     public ?EskerException $eskerException = null;
