@@ -206,7 +206,7 @@ class QueryService extends BaseService
             $actionResult->nFailed = $wrapper->nFailed;
             $actionResult->nItem = $wrapper->nItem;
             $actionResult->transportIDs = (array) $wrapper->transportIDs->{'string'};
-            $actionResult->errorReason = $wrapper->errorReason;
+            $actionResult->errorReason = $wrapper->errorReason->{'string'};;
             $this->eskerException = null;
         } catch (SoapFault $fault) {
             $this->eskerException = new EskerException();
